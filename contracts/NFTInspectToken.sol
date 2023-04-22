@@ -8,13 +8,13 @@ import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 
 import "./interfaces/ITokenLockup.sol";
 
-contract BlurToken is ERC20Votes, Ownable {
+contract NFTInspectToken is ERC20Votes, Ownable {
 
     uint256 private constant INITIAL_SUPPLY = 3_000_000_000;
 
     address[] public lockups;
 
-    constructor() ERC20Permit("Blur") ERC20("Blur", "BLUR") {
+    constructor() ERC20Permit("NFTT") ERC20("NFTInspect", "NFTT") {
         _mint(msg.sender, INITIAL_SUPPLY * 10 ** 18);
     }
 
