@@ -1,12 +1,12 @@
-import { ethers, upgrades } from "hardhat";
+import { ethers } from "hardhat";
 
 async function main() {
   const ContractFactory = await ethers.getContractFactory("Inspect");
 
-  const instance = await upgrades.deployProxy(ContractFactory);
+  const instance = await ContractFactory.deploy();
   await instance.deployed();
 
-  console.log(`Proxy deployed to ${instance.address}`);
+  console.log(`Contract deployed to ${instance.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
