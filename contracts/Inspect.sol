@@ -16,7 +16,6 @@ contract Inspect is ERC20, ERC20Snapshot, AccessControl, ERC20Permit, ERC20Votes
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
         _grantRole(SNAPSHOT_ROLE, msg.sender);
 
-        uint256 initialSupply = 1000000000 * 10 ** uint256(decimals());
 
         address public_sale = 0x853dcC2dDAf853383D909480f4a5B2B00811baEB; //PUBLIC SALE 12% 
         address strategicSale = 0x69d61993c1D442fd4b708874637EDd6d481DD842; // STRATEGIC SALE 7%
@@ -26,13 +25,13 @@ contract Inspect is ERC20, ERC20Snapshot, AccessControl, ERC20Permit, ERC20Votes
         address communityFoundation = 0x60e872A640FC18DC24c161dd88C530368c28aF67; //COMMUNITY_FOUNDATION 28%
         address coreContributors = 0xA94BfDA106554fb8AD107179a08d704e377B0574; //CORE CONTRIBUTORS 18%
         
-        uint256 public_sale_amount = initialSupply * 12 / 100;
-        uint256 strategicSale_amount = initialSupply * 7 / 100;
-        uint256 ecosystemGrowth_amount = initialSupply * 10 / 100;
-        uint256 liquidity_amount = initialSupply * 20 / 100;
-        uint256 advisors_amount = initialSupply * 5 / 100;
-        uint256 communityFoundation_amount = initialSupply * 28 / 100;
-        uint256 coreContributors_amount = initialSupply * 18 / 100;
+        uint256 public_sale_amount = 1000000000 * 10 ** uint256(decimals()) * 12 / 100;
+        uint256 strategicSale_amount = 1000000000 * 10 ** uint256(decimals()) * 7 / 100;
+        uint256 ecosystemGrowth_amount = 1000000000 * 10 ** uint256(decimals()) * 10 / 100;
+        uint256 liquidity_amount = 1000000000 * 10 ** uint256(decimals()) * 20 / 100;
+        uint256 advisors_amount = 1000000000 * 10 ** uint256(decimals()) * 5 / 100;
+        uint256 communityFoundation_amount = 1000000000 * 10 ** uint256(decimals()) * 28 / 100;
+        uint256 coreContributors_amount = 1000000000 * 10 ** uint256(decimals()) * 18 / 100;
 
         _mint(public_sale, public_sale_amount);
         _mint(strategicSale, strategicSale_amount);
