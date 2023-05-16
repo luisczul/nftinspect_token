@@ -4,13 +4,17 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-/// @custom:security-contact tech@nftinspect.xyz
-contract Inspect is ERC20, ERC20Burnable, ERC20Snapshot, Ownable, ERC20Permit, ERC20Votes {
+contract Inspect is ERC20, ERC20Snapshot, AccessControl, ERC20Permit, ERC20Votes {
+    bytes32 public constant SNAPSHOT_ROLE = keccak256("SNAPSHOT_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
+
     constructor() ERC20("Inspect", "INSP") ERC20Permit("Inspect") {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(SNAPSHOT_ROLE, msg.sender);
 
         uint256 initialSupply = 1000000000 * 10 ** uint256(decimals());
 
@@ -38,10 +42,15 @@ contract Inspect is ERC20, ERC20Burnable, ERC20Snapshot, Ownable, ERC20Permit, E
         _mint(communityFoundation, communityFoundation_amount);
         _mint(coreContributors, coreContributors_amount);
 
+        _grantRole(MINTER_ROLE, msg.sender);
     }
 
-    function snapshot() public onlyOwner {
+    function snapshot() public onlyRole(SNAPSHOT_ROLE) {
         _snapshot();
+    }
+
+    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
+        _mint(to, amount);
     }
 
     // The following functions are overrides required by Solidity.
@@ -72,9 +81,5 @@ contract Inspect is ERC20, ERC20Burnable, ERC20Snapshot, Ownable, ERC20Permit, E
         override(ERC20, ERC20Votes)
     {
         super._burn(account, amount);
-    }
-
-    function distributeTokens(uint256 amount) private {
-        
     }
 }
