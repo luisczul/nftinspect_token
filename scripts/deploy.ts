@@ -3,10 +3,11 @@ import { ethers } from "hardhat";
 async function main() {
   const ContractFactory = await ethers.getContractFactory("Inspect");
 
-  const instance = await ContractFactory.deploy();
-  await instance.deployed();
+  // TODO: Set addresses for the contract arguments below
+  const instance = await ContractFactory.deploy(defaultAdmin);
+  await instance.waitForDeployment();
 
-  console.log(`Contract deployed to ${instance.address}`);
+  console.log(`Contract deployed to ${await instance.getAddress()}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

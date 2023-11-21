@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.22;
+pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
-contract Inspect is ERC20, ERC20Snapshot, AccessControl, ERC20Permit, ERC20Votes {
-    bytes32 public constant SNAPSHOT_ROLE = keccak256("SNAPSHOT_ROLE");
-    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-
-    constructor() ERC20("Inspect", "INSP") ERC20Permit("Inspect") {
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
-        _grantRole(SNAPSHOT_ROLE, msg.sender);
-        _grantRole(MINTER_ROLE, msg.sender);
+contract Inspect is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes, AccessControl {
+    constructor(address defaultAdmin)
+        ERC20("Inspect", "INSP")
+        ERC20Permit("Inspect")
+    {
+        
 
         address publicSale = 0x853dcC2dDAf853383D909480f4a5B2B00811baEB; //PUBLIC SALE 12% 
         address strategicSale = 0x69d61993c1D442fd4b708874637EDd6d481DD842; // STRATEGIC SALE 7%
@@ -41,44 +38,26 @@ contract Inspect is ERC20, ERC20Snapshot, AccessControl, ERC20Permit, ERC20Votes
         _mint(communityFoundation, communityFoundationAmount);
         _mint(coreContributors, coreContributorsAmount);
 
-        _revokeRole(MINTER_ROLE, msg.sender);
-    }
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
-    function snapshot() public onlyRole(SNAPSHOT_ROLE) {
-        _snapshot();
-    }
-
-    function mint(address to, uint256 amount) public onlyRole(MINTER_ROLE) {
-        _mint(to, amount);
     }
 
     // The following functions are overrides required by Solidity.
 
-    function _beforeTokenTransfer(address from, address to, uint256 amount)
-        internal
-        override(ERC20, ERC20Snapshot)
-    {
-        super._beforeTokenTransfer(from, to, amount);
-    }
-
-    function _afterTokenTransfer(address from, address to, uint256 amount)
+    function _update(address from, address to, uint256 value)
         internal
         override(ERC20, ERC20Votes)
     {
-        super._afterTokenTransfer(from, to, amount);
+        super._update(from, to, value);
     }
 
-    function _mint(address to, uint256 amount)
-        internal
-        override(ERC20, ERC20Votes)
+    function nonces(address owner)
+        public
+        view
+        override(ERC20Permit, Nonces)
+        returns (uint256)
     {
-        super._mint(to, amount);
+        return super.nonces(owner);
     }
-
-    function _burn(address account, uint256 amount)
-        internal
-        override(ERC20, ERC20Votes)
-    {
-        super._burn(account, amount);
-    }
+    
 }

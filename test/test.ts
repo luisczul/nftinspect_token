@@ -5,8 +5,10 @@ describe("Inspect", function () {
   it("Test contract", async function () {
     const ContractFactory = await ethers.getContractFactory("Inspect");
 
-    const instance = await ContractFactory.deploy();
-    await instance.deployed();
+    const defaultAdmin = (await ethers.getSigners())[0].address;
+
+    const instance = await ContractFactory.deploy(defaultAdmin);
+    await instance.waitForDeployment();
 
     expect(await instance.name()).to.equal("Inspect");
   });
