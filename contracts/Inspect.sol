@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
-import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC20/extensions/ERC20Permit.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC20/extensions/ERC20Votes.sol";
+import "@openzeppelin/contracts@5.0.0/access/AccessControl.sol";
 
 contract Inspect is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes, AccessControl {
     constructor(address defaultAdmin)
@@ -13,6 +13,7 @@ contract Inspect is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes, AccessControl
         ERC20Permit("Inspect")
     {
         
+        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
 
         address publicSale = 0x853dcC2dDAf853383D909480f4a5B2B00811baEB; //PUBLIC SALE 12% 
         address strategicSale = 0x69d61993c1D442fd4b708874637EDd6d481DD842; // STRATEGIC SALE 7%
@@ -37,8 +38,6 @@ contract Inspect is ERC20, ERC20Burnable, ERC20Permit, ERC20Votes, AccessControl
         _mint(advisors, advisorsAmount);
         _mint(communityFoundation, communityFoundationAmount);
         _mint(coreContributors, coreContributorsAmount);
-
-        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
 
     }
 
