@@ -6,13 +6,7 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "defaultAdmin",
-						"type": "address"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
@@ -1632,11 +1626,11 @@
 			]
 		},
 		"contracts/Inspect.sol": {
-			"keccak256": "0x6fc2e5f8c92934cd074eaa2642709f2012b4ae0ff0f4c8235f8358312e7423c8",
+			"keccak256": "0x8e8f9fee8cff0f5ca097359d6812fc379cc5aeeb27b527e6458ffcbc9786e931",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1b69780580066bb1fb141ef6e204600dc26199c8e07db98ee00c296bb26469b5",
-				"dweb:/ipfs/Qmc5mfE1dmipoXJGK7Mfb3fY6zVGhuG2PNrjPHnw89bo5e"
+				"bzz-raw://00da660f678eaee6541328ed7a58801ea6fe68cdf880b63cdadc94f8ed8a99e7",
+				"dweb:/ipfs/QmWZc6DWBKGcoUTBQw4ix45mLMHuVjE7xsfCRhd3mwpPBQ"
 			]
 		}
 	},
